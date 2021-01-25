@@ -4,7 +4,7 @@ return [
     'configs' => [
         [
             /*
-             * This package supports multiple webhook receiving endpoints. If you only have
+             * This package support multiple webhook receiving endpoints. If you only have
              * one endpoint receiving webhooks, you can use 'default'.
              */
             'name' => 'default',
@@ -31,11 +31,6 @@ return [
              * This class determines if the webhook call should be stored and processed.
              */
             'webhook_profile' => \Spatie\WebhookClient\WebhookProfile\ProcessEverythingWebhookProfile::class,
-
-            /*
-             * This class determines the response on a valid webhook call.
-             */
-            'webhook_response' => \Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo::class,
 
             /*
              * The classname of the model to be used to store call. The class should be equal

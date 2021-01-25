@@ -2,50 +2,6 @@
 
 All notable changes to `laravel-webhook-client` will be documented in this file
 
-## 2.7.5 - 2021-01-08
-
-- Fix php constraint
-
-## 2.7.4 - 2020-11-28
-
-- add support for PHP 8
-
-## 2.7.3 - 2020-10-10
-
-- fix docblock
-
-## 2.7.2 - 2020-09-08
-
-- add support for Laravel 8
-
-## 2.7.1 - 2020-04-30
-
-- use default webhook response as fallback (#60)
-
-## 2.7.0 - 2020-04-30
-
-- add support for creating your own webhook response
-
-## 2.6.1 - 2020-04-20
-
-- use job class instead of instance in webhook config
-
-## 2.6.0 - 2020-04-15
-
-- drop support for Laravel 5
-
-## 2.5.0 - 2020-03-02
-
-- add support for Laravel 7
-
-## 2.4.1 - 2020-01-20
-
-- support older Laravel versions
-
-## 2.4.0 - 2019-12-08
-
-- drop support for PHP 7.3 and below
-
 ## 2.3.0 - 2019-10-30
 
 - add `WebhookConfigRepository` to make it easier to programmatically add config 

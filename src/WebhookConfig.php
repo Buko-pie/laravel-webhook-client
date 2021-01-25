@@ -3,28 +3,31 @@
 namespace Spatie\WebhookClient;
 
 use Spatie\WebhookClient\Exceptions\InvalidConfig;
-use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 use Spatie\WebhookClient\WebhookProfile\WebhookProfile;
-use Spatie\WebhookClient\WebhookResponse\DefaultRespondsTo;
-use Spatie\WebhookClient\WebhookResponse\RespondsToWebhook;
+use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 
 class WebhookConfig
 {
-    public string $name;
+    /** @var string */
+    public $name;
 
-    public string $signingSecret;
+    /** @var string */
+    public $signingSecret;
 
-    public string $signatureHeaderName;
+    /** @var string */
+    public $signatureHeaderName;
 
-    public SignatureValidator $signatureValidator;
+    /** @var \Spatie\WebhookClient\SignatureValidator\SignatureValidator */
+    public $signatureValidator;
 
-    public WebhookProfile $webhookProfile;
+    /** @var \Spatie\WebhookClient\WebhookProfile\WebhookProfile */
+    public $webhookProfile;
 
-    public RespondsToWebhook $webhookResponse;
+    /** @var string */
+    public $webhookModel;
 
-    public string $webhookModel;
-
-    public string $processWebhookJobClass;
+    /** @var \Spatie\WebhookClient\ProcessWebhookJob */
+    public $processWebhookJob;
 
     public function __construct(array $properties)
     {
@@ -44,17 +47,11 @@ class WebhookConfig
         }
         $this->webhookProfile = app($properties['webhook_profile']);
 
-        $webhookResponseClass = $properties['webhook_response'] ?? DefaultRespondsTo::class;
-        if (! is_subclass_of($webhookResponseClass, RespondsToWebhook::class)) {
-            throw InvalidConfig::invalidWebhookResponse($webhookResponseClass);
-        }
-        $this->webhookResponse = app($webhookResponseClass);
-
         $this->webhookModel = $properties['webhook_model'];
 
         if (! is_subclass_of($properties['process_webhook_job'], ProcessWebhookJob::class)) {
             throw InvalidConfig::invalidProcessWebhookJob($properties['process_webhook_job']);
         }
-        $this->processWebhookJobClass = $properties['process_webhook_job'];
+        $this->processWebhookJob = app($properties['process_webhook_job']);
     }
 }

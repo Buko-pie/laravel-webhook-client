@@ -3,8 +3,10 @@
 namespace Spatie\WebhookClient\Models;
 
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+// use Illuminate\Database\Eloquent\Model;
+// using Jenssegers\Mongodb\Eloquent\Model instead of Illuminate\Database\Eloquent\Model because of MongoDB database
+use Jenssegers\Mongodb\Eloquent\Model; 
 use Spatie\WebhookClient\WebhookConfig;
 
 class WebhookCall extends Model
@@ -24,7 +26,7 @@ class WebhookCall extends Model
         ]);
     }
 
-    public function saveException(Exception $exception): self
+    public function saveException(Exception $exception)
     {
         $this->exception = [
             'code' => $exception->getCode(),
@@ -37,7 +39,7 @@ class WebhookCall extends Model
         return $this;
     }
 
-    public function clearException(): self
+    public function clearException()
     {
         $this->exception = null;
 

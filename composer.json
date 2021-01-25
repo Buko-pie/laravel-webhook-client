@@ -1,6 +1,6 @@
 {
     "name": "spatie/laravel-webhook-client",
-    "description": "Receive webhooks in Laravel apps",
+    "description": "Receive webhoops in Laravel apps",
     "keywords": [
         "spatie",
         "laravel-webhook-client"
@@ -16,14 +16,14 @@
         }
     ],
     "require": {
-        "php": "^8.0|^7.4",
-        "illuminate/bus": "^7.0|^8.0",
-        "illuminate/database": "^7.0|^8.0",
-        "illuminate/support": "^7.0|^8.0"
+        "php": "^7.2",
+        "illuminate/bus": "^5.8|^6.0",
+        "illuminate/database": "^5.8|^6.0",
+        "illuminate/support": "^5.8|^6.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^5.0|^6.0",
-        "phpunit/phpunit": "^9.3.8"
+        "orchestra/testbench": "^3.8|^4.0",
+        "phpunit/phpunit": "^8.2"
     },
     "autoload": {
         "psr-4": {
@@ -36,7 +36,6 @@
         }
     },
     "scripts": {
-        "psalm": "vendor/bin/psalm",
         "test": "vendor/bin/phpunit",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
 
@@ -50,7 +49,5 @@
                 "Spatie\\WebhookClient\\WebhookClientServiceProvider"
             ]
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }

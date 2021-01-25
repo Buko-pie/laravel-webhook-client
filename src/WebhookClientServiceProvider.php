@@ -2,9 +2,9 @@
 
 namespace Spatie\WebhookClient;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 use Spatie\WebhookClient\Exceptions\InvalidConfig;
 
 class WebhookClientServiceProvider extends ServiceProvider
@@ -25,14 +25,18 @@ class WebhookClientServiceProvider extends ServiceProvider
             ], 'migrations');
         }
 
-        Route::macro('webhooks', fn (string $url, string $name = 'default') => Route::post($url, '\Spatie\WebhookClient\WebhookController')->name("webhook-client-{$name}"));
+        Route::macro('webhooks', function (string $url, string $name = 'default') {
+            return Route::post($url, '\Spatie\WebhookClient\WebhookController')->name("webhook-client-{$name}");
+        });
 
-        $this->app->singleton(WebhookConfigRepository::class, function () {
+        $this->app->singleton(WebhookConfigRepository::class, function() {
             $configRepository = new WebhookConfigRepository();
 
             collect(config('webhook-client.configs'))
-                ->map(fn (array $config) => new WebhookConfig($config))
-                ->each(function (WebhookConfig $webhookConfig) use ($configRepository) {
+                ->map(function (array $config) {
+                    return new WebhookConfig($config);
+                })
+                ->each(function(WebhookConfig $webhookConfig) use ($configRepository) {
                     $configRepository->addConfig($webhookConfig);
                 });
 

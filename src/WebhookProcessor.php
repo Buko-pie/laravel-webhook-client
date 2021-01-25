@@ -4,15 +4,17 @@ namespace Spatie\WebhookClient;
 
 use Exception;
 use Illuminate\Http\Request;
-use Spatie\WebhookClient\Events\InvalidSignatureEvent;
-use Spatie\WebhookClient\Exceptions\WebhookFailed;
 use Spatie\WebhookClient\Models\WebhookCall;
+use Spatie\WebhookClient\Exceptions\WebhookFailed;
+use Spatie\WebhookClient\Events\InvalidSignatureEvent;
 
 class WebhookProcessor
 {
-    protected Request $request;
+    /** @var \Illuminate\Http\Request */
+    protected $request;
 
-    protected WebhookConfig $config;
+    /** @var \Spatie\WebhookClient\WebhookConfig */
+    protected $config;
 
     public function __construct(Request $request, WebhookConfig $config)
     {
@@ -26,14 +28,12 @@ class WebhookProcessor
         $this->ensureValidSignature();
 
         if (! $this->config->webhookProfile->shouldProcess($this->request)) {
-            return $this->createResponse();
+            return;
         }
 
         $webhookCall = $this->storeWebhook();
 
         $this->processWebhook($webhookCall);
-
-        return $this->createResponse();
     }
 
     protected function ensureValidSignature()
@@ -55,7 +55,7 @@ class WebhookProcessor
     protected function processWebhook(WebhookCall $webhookCall): void
     {
         try {
-            $job = new $this->config->processWebhookJobClass($webhookCall);
+            $job = new $this->config->processWebhookJob($webhookCall);
 
             $webhookCall->clearException();
 
@@ -65,10 +65,5 @@ class WebhookProcessor
 
             throw $exception;
         }
-    }
-
-    protected function createResponse()
-    {
-        return $this->config->webhookResponse->respondToValidWebhook($this->request, $this->config);
     }
 }
